@@ -96,3 +96,37 @@ activation=활성화 함수)**
 연산 시간을 단축해준다. batch_size가 증가할수록 컴퓨터 연산 속도 증가.
 I/O 전송시간만 단축해주고, 순수 CPU와 GPU 연산시간만 남게 되므로, 연산
 속도 증가에 한계는 있음.
+
+
+
+
+# k겹 교차 검증 p.175
+n_fold = k
+skf = StratifiedKFold(n_splits=n_fold, shuffle=True, random_state=seed)
+
+
+# ModelCheckpoint - 모델 저장
+checkpointer = ModelCheckpoint(filepath=modelpath, monitor=손실함수, verbose=1, save_best_only=True)
+verbose= 0, 1, 2
+0: 과정 생략
+1: 과정을 보여줌
+save_best_only=True
+앞서 저장한 모델보다 나아졌을 때만 저장
+
+
+# EarlyStopping - 학습의 자동 중단
+early_stopping_callback = EarlyStopping(monitor=손실함수, patience=100)
+model.fit(X, Y, validation_split= , epochs= , batch_size= , callbacks=[early_stopping_callback])
+monitor=중단 기준(손실함수)
+patience= 횟수 반복 동안 개선 없으면 중단
+
+
+# history에는 4개의 값이 존재
+      학습셋 사용
+loss : 훈련 손실값
+acc : 훈련 정확도
+      테스트셋 사용
+val_loss : 검증 손실값
+val_acc : 검증 정확도
+y_loss = history.history[‘loss’]
+y_vloss = history.history[‘val_loss’]
